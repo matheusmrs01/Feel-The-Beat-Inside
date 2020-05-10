@@ -12,7 +12,21 @@ export default () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator
+                screenOptions={{
+                    headerTransparent: false,
+                    headerTintColor: "#FFF",
+                    headerTitleStyle: {
+                        fontWeight: "bold",
+                    },
+                    headerTitleAlign: "center",
+                    headerStyle: {
+                        backgroundColor: "#312e38"
+                    },
+                    headerLeftContainerStyle: {
+                        marginLeft: 20,
+                    }
+                }}>
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Home" component={Home} />
             </Stack.Navigator>
