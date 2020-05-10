@@ -4,6 +4,7 @@ import 'react-native-gesture-handler';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
+import './src/utils/ReactotronConfig';
 import { store, persistor } from './src/store';
 
 import App from './src';
