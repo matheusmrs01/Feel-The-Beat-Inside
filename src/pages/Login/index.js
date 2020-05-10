@@ -1,14 +1,19 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-// import { Container } from './styles';
+import Background from '../../components/Background';
 
-const Login = ({ navigation }) => {
+import { Container, TouchableContainer, Label } from './styles';
+
+export default function Login({ navigation }) {
     return (
-        <TouchableOpacity onPress={() => { navigation.navigate('Home') }}>
-            <Text>Go to Home</Text>
-        </TouchableOpacity>
+        <Background>
+            <Container>
+                <TouchableContainer onPress={() => { navigation.navigate('Home') }}>
+                    <MaterialCommunityIcons name="spotify" size={32} color="#81b71a" />
+                    <Label>Login com Spotify</Label>
+                </TouchableContainer>
+            </Container>
+        </Background>
     );
-}
-
-export default Login;
+};
