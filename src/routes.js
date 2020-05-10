@@ -27,7 +27,14 @@ export default () => {
                         marginLeft: 20,
                     }
                 }}>
-                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen
+                    name="Login"
+                    component={Login}
+                    options={{
+                        headerTransparent: true,
+                        title: ''
+                    }}
+                />
                 <Stack.Screen name="Home" component={Home} />
             </Stack.Navigator>
         </NavigationContainer>
