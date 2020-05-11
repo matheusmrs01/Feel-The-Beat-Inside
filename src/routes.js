@@ -1,7 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { MaterialIcons } from '@expo/vector-icons';
+
+import { returnToHome } from './store/modules/playlist/action';
 
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -9,6 +13,26 @@ import Home from './pages/Home';
 const Stack = createStackNavigator();
 
 export default ({ isSignedIn = false }) => {
+    const isPlaylistTime = useSelector(state => state.playlist.isPlaylistTime)
+    const dispatch = useDispatch()
+
+    const homeOptions = isPlaylistTime ? {
+        headerTransparent: true,
+        title: '',
+    } : {
+            headerTransparent: false,
+            title: 'Playlist',
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => { dispatch(returnToHome()) }}>
+                    <MaterialIcons
+                        name="chevron-left"
+                        size={40}
+                        color="#fff"
+                    />
+                </TouchableOpacity>
+            )
+        };
+
     const stackNavigationOption = {
         headerTransparent: false,
         headerTintColor: "#FFF",
@@ -30,10 +54,7 @@ export default ({ isSignedIn = false }) => {
                     <Stack.Screen
                         name="Home"
                         component={Home}
-                        options={{
-                            headerTransparent: true,
-                            title: ''
-                        }}
+                        options={homeOptions}
                     />
                 </Stack.Navigator>
             ) : (
