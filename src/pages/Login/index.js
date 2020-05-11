@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 
+import api from '../../service/api';
 import { signInSuccess } from '../../store/modules/auth/actions';
 import getToken from '../../utils/getTokens';
 
@@ -15,10 +16,11 @@ export default function Login({ navigation }) {
 
     async function login() {
         let AuthorizationContent
+        let response
 
         try {
             AuthorizationContent = await getToken();
-        } catch (error) {
+        } catch (err) {
             Alert.alert('Erro ao logar com o Spotify', 'Tente novamente mais tarde!');
             return
         }
@@ -29,9 +31,17 @@ export default function Login({ navigation }) {
             expires_in
         } = AuthorizationContent;
 
+        api.defaults.headers.Authorization = `Bearer ${access_token}`;
+
+        try {
+            response = await api.get('/me')
+        } catch (err) {
+            Alert.alert('Erro ao logar com o Spotify', 'Tente novamente mais tarde!');
+            return
+        }
+
         const expirationTime = new Date().getTime() + expires_in * 1000;
-        // console.tron.warn(expirationTime)
-        dispatch(signInSuccess(access_token, expirationTime, refresh_token))
+        dispatch(signInSuccess(access_token, expirationTime, refresh_token, response.data.id))
         return
     }
 
