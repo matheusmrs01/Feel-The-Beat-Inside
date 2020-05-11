@@ -1,7 +1,7 @@
-export function signInSuccess(access_token, expires_in, refresh_token) {
+export function signInSuccess(access_token, expires_in, refresh_token, spotifyUserId) {
     return {
         type: '@auth/LOG_IN_SUCCESS',
-        payload: { access_token, expires_in, refresh_token },
+        payload: { access_token, expires_in, refresh_token, spotifyUserId },
     };
 }
 
