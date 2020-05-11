@@ -27,7 +27,14 @@ export default ({ isSignedIn = false }) => {
         <NavigationContainer>
             {isSignedIn ? (
                 <Stack.Navigator screenOptions={stackNavigationOption}>
-                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen
+                        name="Home"
+                        component={Home}
+                        options={{
+                            headerTransparent: true,
+                            title: ''
+                        }}
+                    />
                 </Stack.Navigator>
             ) : (
                     <Stack.Navigator screenOptions={stackNavigationOption}>
