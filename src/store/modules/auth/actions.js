@@ -5,10 +5,10 @@ export function signInRequest(user, password) {
     };
 }
 
-export function signInSuccess(token) {
+export function signInSuccess(access_token, expires_in, refresh_token) {
     return {
         type: '@auth/LOG_IN_SUCCESS',
-        payload: { token },
+        payload: { access_token, expires_in, refresh_token },
     };
 }
 
