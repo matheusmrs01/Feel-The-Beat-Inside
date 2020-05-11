@@ -11,10 +11,6 @@ const INITIAL_STATE = {
 export default function auth(state = INITIAL_STATE, action) {
     return produce(state, draft => {
         switch (action.type) {
-            case '@auth/LOG_IN_REQUEST': {
-                draft.loading = true;
-                break;
-            }
             case '@auth/LOG_IN_SUCCESS': {
                 draft.access_token = action.payload.access_token;
                 draft.expires_in = action.payload.expires_in;
@@ -23,9 +19,17 @@ export default function auth(state = INITIAL_STATE, action) {
                 draft.loading = false;
                 break;
             }
-            case '@auth/SIGN_FAILURE': {
-                draft.loading = false;
+            case '@auth/REFRESH_TOKEN': {
+                draft.access_token = action.payload.access_token;
+                draft.expires_in = action.payload.expires_in;
+                draft.refresh_token = action.payload.refresh_token;
                 break;
+            }
+            case '@auth/LOGOUT': {
+                draft.access_token = '';
+                draft.expires_in = '';
+                draft.refresh_token = '';
+                draft.signed = false;
             }
         }
     });
