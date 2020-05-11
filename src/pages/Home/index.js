@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import api from '../../service/api';
+
 import { refreshToken, logout } from '../../store/modules/auth/actions';
 import refreshSpotifyTokens from '../../utils/refreshTokens';
+
 import Background from '../../components/Background';
 import Playlist from '../../components/Playlist';
+import SongList from '../../components/SongList';
 import MusicPlayer from '../../components/MusicPlayer';
 
 import { Container, Content, Playlists } from './styles';
@@ -17,6 +19,9 @@ export default function Home({ navigation }) {
     const refreshTokenVariable = useSelector(state => state.auth.refresh_token);
     const tokenExpirationTime = useSelector(state => state.auth.expires_in)
     const userId = useSelector(state => state.auth.spotifyUserId)
+
+    const isPlaylistTime = useSelector(state => state.playlist.isPlaylistTime)
+    const songList = useSelector(state => state.playlist.songlist)
 
     const [playlists, setPlaylists] = useState([])
     const [acceessToken, setAccessToken] = useState(useSelector(state => state.auth.access_token))
@@ -67,11 +72,15 @@ export default function Home({ navigation }) {
             <Container>
                 <Content>
                     <Playlists
-                        data={playlists}
-                        keyExtractor={item => String(item.id)}
+                        data={isPlaylistTime ? playlists : songList.items}
+                        keyExtractor={item => isPlaylistTime ? String(item.id) : String(item.track.id)}
                         renderItem={
                             ({ item }) => (
-                                <Playlist data={item} />
+                                isPlaylistTime ? (
+                                    <Playlist data={item} />
+                                ) : (
+                                        <SongList data={item} />
+                                    )
                             )
                         }
                     />
