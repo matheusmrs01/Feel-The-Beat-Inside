@@ -5,3 +5,9 @@ export function selectPlaylist(playlist, songlist) {
         songlist: songlist,
     };
 }
+
+export function returnToHome() {
+    return {
+        type: '@playlist/RETURN_TO_HOME',
+    };
+}

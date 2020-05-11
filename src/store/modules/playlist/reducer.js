@@ -15,6 +15,12 @@ export default function playlist(state = INITIAL_STATE, action) {
                 draft.isPlaylistTime = false;
                 break;
             }
+            case '@playlist/RETURN_TO_HOME': {
+                draft.playlist = null;
+                draft.songlist = null;
+                draft.isPlaylistTime = true;
+                break;
+            }
         }
     });
 }
