@@ -70,7 +70,6 @@ const Playlist = ({ data, index }) => {
         try {
             response = await api.get(`${data.tracks.href.split('v1')[1]}`)
         } catch (e) {
-            console.tron.warn(e)
             Alert.alert('Erro ao buscar musicas', 'Não foi possível buscar as musicas dessa playlist, tente novamente mais tarde.')
             return
         }

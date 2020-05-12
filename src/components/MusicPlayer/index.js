@@ -53,8 +53,6 @@ const MusicPlayer = () => {
     const [songTimeMissing, setSongTimeMissing] = useState(parseInt(currentSongPlaying.track.duration_ms / 1000))
     const [percentageProgressBar, setPercentageProgressBar] = useState(0)
 
-    console.tron.warn(currentSongPlaying)
-
     function onStart() {
         interval = setInterval(() => {
             setValueTime(oldValue => oldValue + 1)
