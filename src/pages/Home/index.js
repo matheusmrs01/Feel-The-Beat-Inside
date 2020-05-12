@@ -13,7 +13,13 @@ import Playlist from '../../components/Playlist';
 import SongList from '../../components/SongList';
 import MusicPlayer from '../../components/MusicPlayer';
 
-import { Container, Content, Playlists } from './styles';
+import {
+    Container,
+    Content,
+    Playlists,
+    LoadingMoreDateItem,
+    ItemLoading
+} from './styles';
 
 export default function Home({ navigation }) {
     const dispatch = useDispatch();
@@ -104,6 +110,14 @@ export default function Home({ navigation }) {
         return
     }
 
+    function renderFooter() {
+        if (!loadingMorePlaylists || !nextPage) {
+            return null
+        } else {
+            return <LoadingMoreDateItem><ItemLoading color="#fff" /></LoadingMoreDateItem>
+        }
+    }
+
     useEffect(() => {
         dispatch(stopTheMusic())
         if (!tokenExpirationTime || new Date().getTime() > tokenExpirationTime) {
@@ -120,6 +134,7 @@ export default function Home({ navigation }) {
                     <Playlists
                         data={isPlaylistTime ? playlists : songList.items}
                         keyExtractor={item => isPlaylistTime ? String(item.id) : String(item.track.id)}
+                        ListFooterComponent={renderFooter}
                         refreshing={loadingRefresh}
                         onRefresh={isPlaylistTime ? onRefresh : null}
                         onEndReached={isPlaylistTime ? loadingMoreData : null}

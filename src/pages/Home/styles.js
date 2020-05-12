@@ -15,3 +15,7 @@ export const Playlists = styled.FlatList.attrs({
 })`
     width: 100%;
 `;
+
+export const LoadingMoreDateItem = styled.View``;
+
+export const ItemLoading = styled.ActivityIndicator``;
