@@ -5,7 +5,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import api from '../../service/api';
 
-import { selectPlaylist, playTheMusic, playOrPauseTheMusic } from '../../store/modules/playlist/action';
+import {
+    selectPlaylist,
+    playTheMusic,
+    playOrPauseTheMusic
+} from '../../store/modules/playlist/action';
 
 import {
     Container,
