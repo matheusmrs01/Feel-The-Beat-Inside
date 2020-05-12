@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import api from '../../service/api';
 
-import { selectPlaylist, playTheMusic } from '../../store/modules/playlist/action';
+import { selectPlaylist, playTheMusic, playOrPauseTheMusic } from '../../store/modules/playlist/action';
 
 import {
     Container,
@@ -20,13 +20,17 @@ import {
 const Playlist = ({ data, index }) => {
     const dispatch = useDispatch()
     const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
+    const isMusicPaused = useSelector(state => state.playlist.isMusicPaused)
+    const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
+
+    const colorIcon = indexCurrentPlayList === index ? '#81b71a' : '#fff';
+    const iconName = indexCurrentPlayList === index && isMusicPaused ? 'play' : indexCurrentPlayList !== index ? 'play' : 'pause';
 
     async function handlePlaylist() {
         let response
         try {
             response = await api.get(`${data.tracks.href.split('v1')[1]}`)
         } catch (e) {
-            console.tron.warn(e)
             Alert.alert('Erro ao buscar musicas', 'Não foi possível buscar as musicas dessa playlist, tente novamente mais tarde.')
             return
         }
@@ -44,7 +48,22 @@ const Playlist = ({ data, index }) => {
             return
         }
 
-        dispatch(playTheMusic(response.data, response.data.items[0], 0, index))
+        if (isMusicPaused) {
+            if (index === indexCurrentPlayList) {
+                dispatch(playOrPauseTheMusic(false))
+            } else {
+                dispatch(playOrPauseTheMusic(false))
+                dispatch(playTheMusic(response.data, response.data.items[0], 0, index))
+            }
+        } else {
+            if (currentSongPlaying && index === indexCurrentPlayList) {
+                dispatch(playOrPauseTheMusic(true))
+            } else {
+                dispatch(playOrPauseTheMusic(false))
+                dispatch(playTheMusic(response.data, response.data.items[0], 0, index))
+            }
+        }
+
         return
     }
 
@@ -58,10 +77,10 @@ const Playlist = ({ data, index }) => {
                 </ContainerDescription>
             </ContainerTracks>
             <TouchableIcon onPress={handlePlaySongs}>
-                {index === indexCurrentPlayList ?
-                    <MaterialCommunityIcons name="pause" size={32} color="#81b71a" /> :
-                    <MaterialCommunityIcons name="play" size={32} color="#fff" />
-                }
+                <MaterialCommunityIcons name={iconName} size={32} color={colorIcon} />
+                {/* {index === indexCurrentPlayList && isMusicPaused ?
+                    <MaterialCommunityIcons name={isMusicPaused ? "play" : "pause"} size={32} color={colorIcon} /> :
+                } */}
             </TouchableIcon>
         </Container>
     );
