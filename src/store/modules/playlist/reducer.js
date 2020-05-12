@@ -7,6 +7,7 @@ const INITIAL_STATE = {
     currentSongPlaying: null,
     indexCurrentSongPlaying: 0,
     indexCurrentPlayList: 0,
+    indexCurrentPlayListPlaying: 0,
     isMusicPaused: false,
     isPlaylistTime: true,
 };
@@ -17,6 +18,7 @@ export default function playlist(state = INITIAL_STATE, action) {
             case '@playlist/SELECT_PLAYLIST': {
                 draft.playlist = action.playlist;
                 draft.songlist = action.songlist;
+                draft.indexCurrentPlayList = action.indexCurrentPlayList;
                 draft.isPlaylistTime = false;
                 break;
             }
@@ -24,19 +26,20 @@ export default function playlist(state = INITIAL_STATE, action) {
                 draft.playlist = null;
                 draft.songlist = null;
                 draft.isPlaylistTime = true;
+                draft.indexCurrentPlayList = 0;
                 break;
             }
             case '@playlist/PLAY_THE_PLAYLIST': {
                 draft.songsPlaying = action.songsPlaying;
                 draft.currentSongPlaying = action.currentSongPlaying;
                 draft.indexCurrentSongPlaying = action.indexCurrentSongPlaying;
-                draft.indexCurrentPlayList = action.indexCurrentPlayList;
+                draft.indexCurrentPlayListPlaying = action.indexCurrentPlayListPlaying;
                 break;
             }
             case '@playlist/STOP_THE_MUSIC': {
                 draft.currentSongPlaying = null;
                 draft.indexCurrentSongPlaying = 0;
-                draft.indexCurrentPlayList = 0;
+                draft.indexCurrentPlayListPlaying = -1;
                 draft.songsPlaying = null;
                 break;
             }
