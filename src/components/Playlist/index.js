@@ -23,12 +23,12 @@ import {
 
 const Playlist = ({ data, index }) => {
     const dispatch = useDispatch()
-    const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
+    const indexCurrentPlayListPlaying = useSelector(state => state.playlist.indexCurrentPlayListPlaying)
     const isMusicPaused = useSelector(state => state.playlist.isMusicPaused)
     const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
 
-    const colorIcon = indexCurrentPlayList === index ? '#81b71a' : '#fff';
-    const iconName = indexCurrentPlayList === index && isMusicPaused ? 'play' : indexCurrentPlayList !== index ? 'play' : 'pause';
+    const colorIcon = indexCurrentPlayListPlaying === index ? '#81b71a' : '#fff';
+    const iconName = indexCurrentPlayListPlaying === index && isMusicPaused ? 'play' : indexCurrentPlayListPlaying !== index ? 'play' : 'pause';
 
     async function handlePlaylist() {
         let response
@@ -53,14 +53,14 @@ const Playlist = ({ data, index }) => {
         }
 
         if (isMusicPaused) {
-            if (index === indexCurrentPlayList) {
+            if (index === indexCurrentPlayListPlaying) {
                 dispatch(playOrPauseTheMusic(false))
             } else {
                 dispatch(playOrPauseTheMusic(false))
                 dispatch(playTheMusic(response.data, response.data.items[0], 0, index))
             }
         } else {
-            if (currentSongPlaying && index === indexCurrentPlayList) {
+            if (currentSongPlaying && index === indexCurrentPlayListPlaying) {
                 dispatch(playOrPauseTheMusic(true))
             } else {
                 dispatch(playOrPauseTheMusic(false))
