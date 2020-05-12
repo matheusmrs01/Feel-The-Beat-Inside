@@ -5,23 +5,42 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export const Container = styled.View`
+    background: #222222;
+`;
+
+export const ContainerFullScreenMode = styled.View`
+    flex: 1;
+    justify-content: center;
+`;
+
+export const ContainerSongOptions = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
-    padding-right: 5px;
-    padding-left: 5px;
+    padding-right: 20px;
+    padding-left: 20px;
 
-    height: ${height * 0.12}px;
+    height: ${props => height * props.percentageWidth}px;
     width: 100%;
-
-    background: #222222;
 `;
 
 export const ContainerTracks = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+`;
+
+export const ContainerTracksFullScreen = styled.View`
+    flex: 1;
+    justify-content: center;
+`;
+
+export const DownIconTouchable = styled.TouchableOpacity`
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
 `;
 
 export const Avatar = styled.Image`
@@ -32,8 +51,20 @@ export const Avatar = styled.Image`
     margin-right: 10px;
 `;
 
+export const AvatarFullScreen = styled.Image`
+    width: 100%;
+    height: ${height * 0.4}px;
+`;
+
 export const ContainerDescription = styled.View`
     width: ${width * 0.6}px;
+`;
+
+export const MusicPlayerContainer = styled.View`
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: ${height * 0.1}px;
 `;
 
 export const Name = styled.Text`
@@ -47,6 +78,8 @@ export const Owner = styled.Text`
     color: #ccc;
     font-size: 10px;
 `;
+
+export const TouchableDefault = styled.TouchableOpacity``;
 
 export const TouchableIcon = styled.TouchableOpacity`
     flex-direction: row;
