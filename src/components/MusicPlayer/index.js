@@ -5,7 +5,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../../service/api';
 
 import {
-    playOrPauseTheMusic
+    playOrPauseTheMusic,
+    playNextSong,
+    playTheMusic
 } from '../../store/modules/playlist/action';
 
 import {
@@ -36,6 +38,8 @@ const MusicPlayer = () => {
     const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
     const isMusicPaused = useSelector(state => state.playlist.isMusicPaused)
 
+    const userPLaylists = useSelector(state => state.playlist.playlists)
+
     function handlePause() {
         dispatch(playOrPauseTheMusic(!isMusicPaused))
     }
@@ -43,6 +47,26 @@ const MusicPlayer = () => {
     function handleSong() {
         setPercentageWidth(oldValue => oldValue === 0.12 ? 0.80 : 0.12)
         return
+    }
+
+    async function handleNextSogn() {
+        if (songsPlaying.items[indexCurrentSongPlaying + 1]) {
+            dispatch(playNextSong(songsPlaying.items[indexCurrentSongPlaying + 1], indexCurrentSongPlaying + 1))
+            return
+        } else {
+            let nextPlaylist = userPLaylists[indexCurrentPlayList + 1] ? userPLaylists[indexCurrentPlayList + 1] : userPLaylists[0]
+            let indexNextPlaylist = userPLaylists[indexCurrentPlayList + 1] ? indexCurrentPlayList + 1 : 0;
+            let response
+            try {
+                response = await api.get(`${nextPlaylist.tracks.href.split('v1')[1]}`)
+            } catch (e) {
+                Alert.alert('Erro ao buscar musicas', 'Não foi possível buscar as musicas dessa playlist, tente novamente mais tarde.')
+                return
+            }
+            dispatch(playTheMusic(response.data, response.data.items[0], 0, indexNextPlaylist))
+            return
+
+        }
     }
 
     return (
@@ -80,11 +104,11 @@ const MusicPlayer = () => {
                                 <MaterialCommunityIcons name="skip-previous" size={80} color="#fff" />
                             </TouchableDefault>
 
-                            <TouchableDefault onPress={() => { }}>
+                            <TouchableDefault onPress={handlePause}>
                                 <MaterialCommunityIcons name={isMusicPaused ? "play" : "pause"} size={80} color="#fff" />
                             </TouchableDefault>
 
-                            <TouchableDefault onPress={() => { }}>
+                            <TouchableDefault onPress={handleNextSogn}>
                                 <MaterialCommunityIcons name="skip-next" size={80} color="#fff" />
                             </TouchableDefault>
                         </MusicPlayerContainer>
