@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import api from '../../service/api';
 
 import { refreshToken, logout } from '../../store/modules/auth/actions';
-import { stopTheMusic } from '../../store/modules/playlist/action';
+import { stopTheMusic, setUserPlaylists } from '../../store/modules/playlist/action';
 import refreshSpotifyTokens from '../../utils/refreshTokens';
 
 import Background from '../../components/Background';
@@ -60,7 +60,7 @@ export default function Home({ navigation }) {
             Alert.alert('Erro ao buscar playlists', 'Tente novamente mais tarde!')
             return
         }
-
+        dispatch(setUserPlaylists(response.data.items))
         setPlaylists(response.data.items)
         return
     }
