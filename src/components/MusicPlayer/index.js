@@ -5,6 +5,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../../service/api';
 
 import {
+    playOrPauseTheMusic
+} from '../../store/modules/playlist/action';
+
+import {
     Container,
     ContainerTracks,
     Avatar,
@@ -15,10 +19,13 @@ import {
 } from './styles';
 
 const MusicPlayer = () => {
+    const dispatch = useDispatch()
+
     const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
     const indexCurrentSongPlaying = useSelector(state => state.playlist.indexCurrentSongPlaying)
     const songsPlaying = useSelector(state => state.playlist.songsPlaying)
     const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
+    const isMusicPaused = useSelector(state => state.playlist.isMusicPaused)
 
     async function getMusic() {
         let response
@@ -31,6 +38,10 @@ const MusicPlayer = () => {
         // Linking.openURL(response.data.external_urls.spotify)
         console.tron.warn(response.data)
         return
+    }
+
+    function handlePause() {
+        dispatch(playOrPauseTheMusic(!isMusicPaused))
     }
 
     // useEffect(() => {
@@ -46,8 +57,8 @@ const MusicPlayer = () => {
                     <Owner>{currentSongPlaying.track.album.name}</Owner>
                 </ContainerDescription>
             </ContainerTracks>
-            <TouchableIcon onPress={() => { }}>
-                <MaterialCommunityIcons name="pause" size={32} color="#81b71a" />
+            <TouchableIcon onPress={handlePause}>
+                <MaterialCommunityIcons name={isMusicPaused ? "play" : "pause"} size={32} color="#81b71a" />
             </TouchableIcon>
         </Container>
     );
