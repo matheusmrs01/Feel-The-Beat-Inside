@@ -1,11 +1,11 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import api from '../../service/api';
 
-import { selectPlaylist } from '../../store/modules/playlist/action';
+import { selectPlaylist, playTheMusic } from '../../store/modules/playlist/action';
 
 import {
     Container,
@@ -17,8 +17,9 @@ import {
     TouchableIcon
 } from './styles';
 
-const Playlist = ({ data }) => {
+const Playlist = ({ data, index }) => {
     const dispatch = useDispatch()
+    const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
 
     async function handlePlaylist() {
         let response
@@ -33,6 +34,20 @@ const Playlist = ({ data }) => {
         return
     }
 
+    async function handlePlaySongs() {
+        let response
+        try {
+            response = await api.get(`${data.tracks.href.split('v1')[1]}`)
+        } catch (e) {
+            console.tron.warn(e)
+            Alert.alert('Erro ao buscar musicas', 'Não foi possível buscar as musicas dessa playlist, tente novamente mais tarde.')
+            return
+        }
+
+        dispatch(playTheMusic(response.data, response.data.items[0], 0, index))
+        return
+    }
+
     return (
         <Container>
             <ContainerTracks onPress={handlePlaylist}>
@@ -42,8 +57,11 @@ const Playlist = ({ data }) => {
                     <Owner>de {data.owner.display_name}</Owner>
                 </ContainerDescription>
             </ContainerTracks>
-            <TouchableIcon onPress={() => { }}>
-                <MaterialCommunityIcons name="play" size={32} color="#fff" />
+            <TouchableIcon onPress={handlePlaySongs}>
+                {index === indexCurrentPlayList ?
+                    <MaterialCommunityIcons name="pause" size={32} color="#81b71a" /> :
+                    <MaterialCommunityIcons name="play" size={32} color="#fff" />
+                }
             </TouchableIcon>
         </Container>
     );
