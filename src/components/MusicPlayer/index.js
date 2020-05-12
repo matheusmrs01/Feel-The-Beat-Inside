@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Linking } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import api from '../../service/api';
@@ -14,8 +14,11 @@ import {
     TouchableIcon
 } from './styles';
 
-const MusicPlayer = ({ data }) => {
-    console.tron.warn(data)
+const MusicPlayer = () => {
+    const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
+    const indexCurrentSongPlaying = useSelector(state => state.playlist.indexCurrentSongPlaying)
+    const songsPlaying = useSelector(state => state.playlist.songsPlaying)
+    const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
 
     async function getMusic() {
         let response
@@ -35,20 +38,17 @@ const MusicPlayer = ({ data }) => {
     // }, [])
     return (
         <Container>
-            {data &&
-                <>
-                    <ContainerTracks onPress={() => { }}>
-                        <Avatar source={{ uri: data ? data.track.album.images[0].url : <MaterialCommunityIcons name="image-broken-variant" size={32} color="#fff" /> }} />
-                        <ContainerDescription>
-                            <Name>{data ? data.track.name : ''}</Name>
-                            <Owner>de {data ? data.track.album.name : ''}</Owner>
-                        </ContainerDescription>
-                    </ContainerTracks>
-                    <TouchableIcon onPress={() => { }}>
-                        <MaterialCommunityIcons name="pause" size={32} color="#81b71a" />
-                    </TouchableIcon>
-                </>
-            }
+            <ContainerTracks onPress={() => { }}>
+                <Avatar source={{ uri: currentSongPlaying.track.album.images[0].url }} />
+                <ContainerDescription>
+                    <Name>{currentSongPlaying.track.name}</Name>
+                    <Owner>de {currentSongPlaying.track.artists[0].name}</Owner>
+                    <Owner>{currentSongPlaying.track.album.name}</Owner>
+                </ContainerDescription>
+            </ContainerTracks>
+            <TouchableIcon onPress={() => { }}>
+                <MaterialCommunityIcons name="pause" size={32} color="#81b71a" />
+            </TouchableIcon>
         </Container>
     );
 }
