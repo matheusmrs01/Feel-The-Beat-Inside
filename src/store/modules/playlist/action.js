@@ -23,6 +23,14 @@ export function playTheMusic(songsPlaying, currentSongPlaying, indexCurrentSongP
     };
 }
 
+export function playNextSong(currentSongPlaying, indexCurrentSongPlaying) {
+    return {
+        type: '@playlist/PLAY_NEXT_SONG',
+        currentSongPlaying: currentSongPlaying,
+        indexCurrentSongPlaying: indexCurrentSongPlaying,
+    }
+}
+
 export function stopTheMusic() {
     return {
         type: '@playlist/STOP_THE_MUSIC',

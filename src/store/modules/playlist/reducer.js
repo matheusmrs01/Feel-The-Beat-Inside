@@ -36,6 +36,11 @@ export default function playlist(state = INITIAL_STATE, action) {
                 draft.indexCurrentPlayListPlaying = action.indexCurrentPlayListPlaying;
                 break;
             }
+            case '@playlist/PLAY_NEXT_SONG': {
+                draft.currentSongPlaying = action.currentSongPlaying;
+                draft.indexCurrentSongPlaying = action.indexCurrentSongPlaying;
+                break;
+            }
             case '@playlist/STOP_THE_MUSIC': {
                 draft.currentSongPlaying = null;
                 draft.indexCurrentSongPlaying = 0;
