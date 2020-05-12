@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import {
-    selectPlaylist,
     playTheMusic,
     playOrPauseTheMusic
 } from '../../store/modules/playlist/actions';

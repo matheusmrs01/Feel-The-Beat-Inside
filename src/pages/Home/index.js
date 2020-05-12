@@ -25,9 +25,6 @@ export default function Home({ navigation }) {
     const songList = useSelector(state => state.playlist.songlist)
 
     const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
-    const indexCurrentSongPlaying = useSelector(state => state.playlist.indexCurrentSongPlaying)
-    const songsPlaying = useSelector(state => state.playlist.songsPlaying)
-    const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
 
     const [playlists, setPlaylists] = useState([])
     const [acceessToken, setAccessToken] = useState(useSelector(state => state.auth.access_token))
