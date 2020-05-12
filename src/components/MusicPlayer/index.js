@@ -24,7 +24,11 @@ import {
     MusicPlayerContainer,
     ContainerFullScreenMode,
     DownIconTouchable,
-    TouchableDefault
+    TouchableDefault,
+    ContainerLoadingBar,
+    LoadingBar,
+    SongTime,
+    ContainerTime
 } from './styles';
 
 const MusicPlayer = () => {
@@ -109,6 +113,12 @@ const MusicPlayer = () => {
                                 <Owner>{currentSongPlaying.track.album.name}</Owner>
                             </ContainerDescription>
                         </ContainerTracksFullScreen>
+                        <ContainerLoadingBar>
+                            <LoadingBar />
+                            <ContainerTime>
+                                <SongTime>2:50</SongTime>
+                            </ContainerTime>
+                        </ContainerLoadingBar>
                         <MusicPlayerContainer>
                             <TouchableDefault onPress={handlePreviousSong}>
                                 <MaterialCommunityIcons name="skip-previous" size={80} color="#fff" />

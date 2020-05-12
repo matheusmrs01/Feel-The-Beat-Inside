@@ -87,3 +87,28 @@ export const TouchableIcon = styled.TouchableOpacity`
     align-items: center;
 `;
 
+export const ContainerLoadingBar = styled.View`
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+`;
+
+export const LoadingBar = styled.View`
+    position: absolute;
+    width: 58%;
+    height: 20px;
+    background: #81b71a;
+    border-radius: 5px;
+`;
+
+export const ContainerTime = styled.View`
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const SongTime = styled.Text`
+    color: #fff;
+    margin-left: 5px;
+`;
