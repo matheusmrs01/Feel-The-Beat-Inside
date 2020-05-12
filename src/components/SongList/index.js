@@ -22,7 +22,7 @@ const SongList = ({ data, index }) => {
 
     const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
     const indexCurrentSongPlaying = useSelector(state => state.playlist.indexCurrentSongPlaying)
-    const songsPlaying = useSelector(state => state.playlist.songsPlaying)
+    const songlist = useSelector(state => state.playlist.songlist)
     const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
     const isMusicPaused = useSelector(state => state.playlist.isMusicPaused)
 
@@ -35,14 +35,14 @@ const SongList = ({ data, index }) => {
                 dispatch(playOrPauseTheMusic(false))
             } else {
                 dispatch(playOrPauseTheMusic(false))
-                dispatch(playTheMusic(songsPlaying, data, index, indexCurrentPlayList))
+                dispatch(playTheMusic(songlist, data, index, indexCurrentPlayList))
             }
         } else {
             if (currentSongPlaying && index === indexCurrentSongPlaying) {
                 dispatch(playOrPauseTheMusic(true))
             } else {
                 dispatch(playOrPauseTheMusic(false))
-                dispatch(playTheMusic(songsPlaying, data, index, indexCurrentPlayList))
+                dispatch(playTheMusic(songlist, data, index, indexCurrentPlayList))
             }
         }
     }
