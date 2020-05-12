@@ -38,7 +38,7 @@ const Playlist = ({ data, index }) => {
             Alert.alert('Erro ao buscar musicas', 'Não foi possível buscar as musicas dessa playlist, tente novamente mais tarde.')
             return
         }
-        dispatch(selectPlaylist(data, response.data))
+        dispatch(selectPlaylist(data, response.data, index))
         return
     }
 
