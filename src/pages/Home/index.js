@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import api from '../../service/api';
 
 import { refreshToken, logout } from '../../store/modules/auth/actions';
+import { stopTheMusic } from '../../store/modules/playlist/action';
 import refreshSpotifyTokens from '../../utils/refreshTokens';
 
 import Background from '../../components/Background';
@@ -68,7 +69,7 @@ export default function Home({ navigation }) {
         if (!tokenExpirationTime || new Date().getTime() > tokenExpirationTime) {
             requestNewTokens()
         }
-
+        dispatch(stopTheMusic())
         getMysPlaylists()
     }, [])
 
