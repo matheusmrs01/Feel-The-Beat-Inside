@@ -1,3 +1,10 @@
+export function setUserPlaylists(playlists) {
+    return {
+        type: '@playlist/SET_PLAYLISTS',
+        playlists: playlists
+    }
+}
+
 export function selectPlaylist(playlist, songlist, indexCurrentPlayList) {
     return {
         type: '@playlist/SELECT_PLAYLIST',

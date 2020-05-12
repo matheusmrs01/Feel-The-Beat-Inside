@@ -1,6 +1,7 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
+    playlists: null,
     playlist: null,
     songlist: null,
     songsPlaying: null,
@@ -15,6 +16,10 @@ const INITIAL_STATE = {
 export default function playlist(state = INITIAL_STATE, action) {
     return produce(state, draft => {
         switch (action.type) {
+            case '@playlist/SET_PLAYLISTS': {
+                draft.playlists = action.playlists;
+                break;
+            }
             case '@playlist/SELECT_PLAYLIST': {
                 draft.playlist = action.playlist;
                 draft.songlist = action.songlist;
