@@ -30,6 +30,10 @@ export default function Home({ navigation }) {
     const [loadingRefresh, setLoadingRefresh] = useState(false)
     const [acceessToken, setAccessToken] = useState(useSelector(state => state.auth.access_token))
 
+    const [nextPage, setNextPage] = useState()
+    const [totalResults, setTotalResults] = useState(0)
+    const [loadingMorePlaylists, setLoadingMorePlaylists] = useState(false)
+
     async function requestNewTokens() {
         let response
         try {
@@ -59,8 +63,39 @@ export default function Home({ navigation }) {
             Alert.alert('Erro ao buscar playlists', 'Tente novamente mais tarde!')
             return
         }
+        setNextPage(response.data.next)
+        setTotalResults(response.data.total)
+
         dispatch(setUserPlaylists(response.data.items))
         setPlaylists(response.data.items)
+        return
+    }
+
+    async function loadingMoreData() {
+        if (loadingMorePlaylists) {
+            return;
+        }
+
+        if (!nextPage) {
+            return
+        }
+
+        setLoadingMorePlaylists(true)
+
+        let response
+
+        api.defaults.headers.Authorization = await `Bearer ${acceessToken}`
+
+        try {
+            response = await api.get(nextPage.split('v1')[1])
+        } catch (err) {
+            Alert.alert('Erro ao buscar playlists', 'Tente novamente mais tarde!')
+            return
+        }
+
+        setNextPage(response.data.nextPage)
+        setPlaylists([...playlists, ...response.data.items])
+        setLoadingMorePlaylists(false)
         return
     }
 
@@ -87,6 +122,8 @@ export default function Home({ navigation }) {
                         keyExtractor={item => isPlaylistTime ? String(item.id) : String(item.track.id)}
                         refreshing={loadingRefresh}
                         onRefresh={isPlaylistTime ? onRefresh : null}
+                        onEndReached={isPlaylistTime ? loadingMoreData : null}
+                        onEndReachedThreshold={isPlaylistTime ? 0.2 : null}
                         renderItem={
                             ({ item, index }) => (
                                 isPlaylistTime ? (
