@@ -23,6 +23,11 @@ export default function Home({ navigation }) {
     const isPlaylistTime = useSelector(state => state.playlist.isPlaylistTime)
     const songList = useSelector(state => state.playlist.songlist)
 
+    const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
+    const indexCurrentSongPlaying = useSelector(state => state.playlist.indexCurrentSongPlaying)
+    const songsPlaying = useSelector(state => state.playlist.songsPlaying)
+    const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
+
     const [playlists, setPlaylists] = useState([])
     const [acceessToken, setAccessToken] = useState(useSelector(state => state.auth.access_token))
 
@@ -75,17 +80,19 @@ export default function Home({ navigation }) {
                         data={isPlaylistTime ? playlists : songList.items}
                         keyExtractor={item => isPlaylistTime ? String(item.id) : String(item.track.id)}
                         renderItem={
-                            ({ item }) => (
+                            ({ item, index }) => (
                                 isPlaylistTime ? (
-                                    <Playlist data={item} />
+                                    <Playlist data={item} index={index} />
                                 ) : (
-                                        <SongList data={item} />
+                                        <SongList data={item} index={index} />
                                     )
                             )
                         }
                     />
                 </Content>
-                <MusicPlayer />
+                {currentSongPlaying &&
+                    <MusicPlayer />
+                }
             </Container>
         </Background>
     );
