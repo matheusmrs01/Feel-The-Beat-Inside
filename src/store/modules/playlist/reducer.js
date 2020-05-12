@@ -40,12 +40,8 @@ export default function playlist(state = INITIAL_STATE, action) {
                 draft.songsPlaying = null;
                 break;
             }
-            case '@playlist/PAUSE_MUSIC': {
-                draft.isMusicPaused = true;
-                break;
-            }
-            case '@playlist/PLAY_MUSIC': {
-                draft.isMusicPaused = true;
+            case '@playlist/PLAY_OR_PAUSE_THE_MUSIC': {
+                draft.isMusicPaused = action.isMusicPaused;
                 break;
             }
         }

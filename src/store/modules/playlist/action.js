@@ -27,3 +27,10 @@ export function stopTheMusic() {
         type: '@playlist/STOP_THE_MUSIC',
     };
 }
+
+export function playOrPauseTheMusic(isMusicPaused) {
+    return {
+        type: '@playlist/PLAY_OR_PAUSE_THE_MUSIC',
+        isMusicPaused: isMusicPaused,
+    };
+}
