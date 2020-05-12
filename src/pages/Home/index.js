@@ -46,6 +46,7 @@ export default function Home({ navigation }) {
         setAccessToken(access_token)
 
         dispatch(refreshToken(access_token, expirationTime, refresh_token))
+        getMysPlaylists()
         return
     }
 
@@ -66,11 +67,12 @@ export default function Home({ navigation }) {
     }
 
     useEffect(() => {
+        dispatch(stopTheMusic())
         if (!tokenExpirationTime || new Date().getTime() > tokenExpirationTime) {
             requestNewTokens()
+        } else {
+            getMysPlaylists()
         }
-        dispatch(stopTheMusic())
-        getMysPlaylists()
     }, [])
 
     return (
