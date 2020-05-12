@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import api from '../../service/api';
+
+import sToTime from '../../utils/sToTime';
 
 import {
     playOrPauseTheMusic,
@@ -31,6 +33,8 @@ import {
     ContainerTime
 } from './styles';
 
+let interval = null;
+
 const MusicPlayer = () => {
     const dispatch = useDispatch()
 
@@ -44,8 +48,36 @@ const MusicPlayer = () => {
 
     const userPLaylists = useSelector(state => state.playlist.playlists)
 
+    const [valueTime, setValueTime] = useState(0)
+    const [songTime, setSongTime] = useState(parseInt(currentSongPlaying.track.duration_ms / 1000))
+    const [songTimeMissing, setSongTimeMissing] = useState(parseInt(currentSongPlaying.track.duration_ms / 1000))
+    const [percentageProgressBar, setPercentageProgressBar] = useState(0)
+
+    console.tron.warn(currentSongPlaying)
+
+    function onStart() {
+        interval = setInterval(() => {
+            setValueTime(oldValue => oldValue + 1)
+        }, 1000)
+    }
+
+    function onPause() {
+        if (isMusicPaused) {
+            clearInterval(interval);
+            return
+        } else {
+            onStart()
+            return
+        }
+    }
+
     function handlePause() {
-        dispatch(playOrPauseTheMusic(!isMusicPaused))
+        if (isMusicPaused) {
+            dispatch(playOrPauseTheMusic(!isMusicPaused))
+        } else {
+            dispatch(playOrPauseTheMusic(!isMusicPaused))
+        }
+        return
     }
 
     function handleSong() {
@@ -83,6 +115,30 @@ const MusicPlayer = () => {
         }
     }
 
+    useEffect(() => {
+        setPercentageProgressBar((valueTime * 100) / songTime)
+        setSongTimeMissing(oldValue => oldValue - 1)
+    }, [valueTime])
+
+    useEffect(() => {
+        if (percentageProgressBar >= 100) {
+            setValueTime(0)
+            setPercentageProgressBar(0)
+            handleNextSogn()
+        }
+    }, [percentageProgressBar])
+
+    useEffect(() => {
+        onPause()
+    }, [isMusicPaused])
+
+    useEffect(() => {
+        setSongTime(parseInt(currentSongPlaying.track.duration_ms / 1000))
+        setSongTimeMissing(parseInt(currentSongPlaying.track.duration_ms / 1000))
+        setValueTime(0)
+        setPercentageProgressBar(0)
+    }, [currentSongPlaying])
+
     return (
         <Container>
             <ContainerSongOptions percentageWidth={percentageWidth}>
@@ -114,9 +170,9 @@ const MusicPlayer = () => {
                             </ContainerDescription>
                         </ContainerTracksFullScreen>
                         <ContainerLoadingBar>
-                            <LoadingBar />
+                            <LoadingBar percentageProgressBar={percentageProgressBar} />
                             <ContainerTime>
-                                <SongTime>2:50</SongTime>
+                                <SongTime>{sToTime(songTimeMissing)}</SongTime>
                             </ContainerTime>
                         </ContainerLoadingBar>
                         <MusicPlayerContainer>

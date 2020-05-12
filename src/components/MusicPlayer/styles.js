@@ -96,7 +96,7 @@ export const ContainerLoadingBar = styled.View`
 
 export const LoadingBar = styled.View`
     position: absolute;
-    width: 58%;
+    width: ${props => props.percentageProgressBar}%;
     height: 20px;
     background: #81b71a;
     border-radius: 5px;
