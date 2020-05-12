@@ -11,6 +11,8 @@ import {
     playOrPauseTheMusic
 } from '../../store/modules/playlist/action';
 
+import { refreshToken, logout } from '../../store/modules/auth/actions';
+
 import {
     Container,
     ContainerTracks,
@@ -23,6 +25,9 @@ import {
 
 const Playlist = ({ data, index }) => {
     const dispatch = useDispatch()
+
+    const refreshTokenVariable = useSelector(state => state.auth.refresh_token);
+
     const indexCurrentPlayListPlaying = useSelector(state => state.playlist.indexCurrentPlayListPlaying)
     const isMusicPaused = useSelector(state => state.playlist.isMusicPaused)
     const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
@@ -35,10 +40,28 @@ const Playlist = ({ data, index }) => {
         try {
             response = await api.get(`${data.tracks.href.split('v1')[1]}`)
         } catch (e) {
-            Alert.alert('Erro ao buscar musicas', 'Não foi possível buscar as musicas dessa playlist, tente novamente mais tarde.')
+            requestNewTokens()
             return
         }
         dispatch(selectPlaylist(data, response.data, index))
+        return
+    }
+
+    async function requestNewTokens() {
+        let response
+        try {
+            response = await refreshSpotifyTokens(refreshTokenVariable)
+        } catch (err) {
+            Alert.alert('Erro ao buscar musicas', 'Não foi possível buscar as musicas dessa playlist, refaça o login e tente novamente.')
+            dispatch(logout())
+            return
+        }
+
+        const { access_token, expires_in, refresh_token } = response;
+        const expirationTime = new Date().getTime() + expires_in * 1000;
+
+        dispatch(refreshToken(access_token, expirationTime, refresh_token))
+        Alert.alert('Desculpe o encomodo!', 'Foi necessário renovar suas credenciais de acesso, tente acessar a playlist novamente.')
         return
     }
 
