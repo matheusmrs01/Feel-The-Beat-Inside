@@ -5,9 +5,8 @@ import { spotifyCredentials } from '../../secrets';
 
 async function getAuthorizationCode() {
     let result
-    const scopesArr = ['user-modify-playback-state', 'user-read-currently-playing', 'user-read-playback-state', 'user-library-modify',
-        'user-library-read', 'playlist-read-private', 'playlist-read-collaborative', 'playlist-modify-public',
-        'playlist-modify-private', 'user-read-recently-played', 'user-top-read'];
+    const scopesArr = ['user-read-currently-playing', 'user-library-read',
+        'playlist-read-private', 'playlist-read-collaborative', 'user-top-read'];
 
     const scopes = scopesArr.join(' ');
     const credentials = spotifyCredentials;
