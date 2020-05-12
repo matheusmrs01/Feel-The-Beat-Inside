@@ -10,7 +10,7 @@ import {
     playOrPauseTheMusic,
     playNextSong,
     playTheMusic
-} from '../../store/modules/playlist/action';
+} from '../../store/modules/playlist/actions';
 
 import {
     Container,

@@ -6,7 +6,7 @@ import {
     selectPlaylist,
     playTheMusic,
     playOrPauseTheMusic
-} from '../../store/modules/playlist/action';
+} from '../../store/modules/playlist/actions';
 
 import {
     Container,

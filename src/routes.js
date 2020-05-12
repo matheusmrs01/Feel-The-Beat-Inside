@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { returnToHome } from './store/modules/playlist/action';
+import { returnToHome } from './store/modules/playlist/actions';
 
 import Login from './pages/Login';
 import Home from './pages/Home';

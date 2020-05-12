@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import api from '../../service/api';
 
 import { refreshToken, logout } from '../../store/modules/auth/actions';
-import { stopTheMusic, setUserPlaylists } from '../../store/modules/playlist/action';
+import { stopTheMusic, setUserPlaylists } from '../../store/modules/playlist/actions';
 import refreshSpotifyTokens from '../../utils/refreshTokens';
 
 import Background from '../../components/Background';
