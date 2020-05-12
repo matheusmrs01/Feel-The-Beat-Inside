@@ -1,8 +1,9 @@
-export function selectPlaylist(playlist, songlist) {
+export function selectPlaylist(playlist, songlist, indexCurrentPlayList) {
     return {
         type: '@playlist/SELECT_PLAYLIST',
         playlist: playlist,
         songlist: songlist,
+        indexCurrentPlayList: indexCurrentPlayList,
     };
 }
 
@@ -12,13 +13,13 @@ export function returnToHome() {
     };
 }
 
-export function playTheMusic(songsPlaying, currentSongPlaying, indexCurrentSongPlaying, indexCurrentPlayList) {
+export function playTheMusic(songsPlaying, currentSongPlaying, indexCurrentSongPlaying, indexCurrentPlayListPlaying) {
     return {
         type: '@playlist/PLAY_THE_PLAYLIST',
         songsPlaying: songsPlaying,
         currentSongPlaying: currentSongPlaying,
         indexCurrentSongPlaying: indexCurrentSongPlaying,
-        indexCurrentPlayList: indexCurrentPlayList,
+        indexCurrentPlayListPlaying: indexCurrentPlayListPlaying,
     };
 }
 
