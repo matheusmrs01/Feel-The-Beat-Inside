@@ -27,6 +27,7 @@ export default function Home({ navigation }) {
     const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
 
     const [playlists, setPlaylists] = useState([])
+    const [loadingRefresh, setLoadingRefresh] = useState(false)
     const [acceessToken, setAccessToken] = useState(useSelector(state => state.auth.access_token))
 
     async function requestNewTokens() {
@@ -63,6 +64,11 @@ export default function Home({ navigation }) {
         return
     }
 
+    function onRefresh() {
+        getMysPlaylists()
+        return
+    }
+
     useEffect(() => {
         dispatch(stopTheMusic())
         if (!tokenExpirationTime || new Date().getTime() > tokenExpirationTime) {
@@ -79,6 +85,8 @@ export default function Home({ navigation }) {
                     <Playlists
                         data={isPlaylistTime ? playlists : songList.items}
                         keyExtractor={item => isPlaylistTime ? String(item.id) : String(item.track.id)}
+                        refreshing={loadingRefresh}
+                        onRefresh={isPlaylistTime ? onRefresh : null}
                         renderItem={
                             ({ item, index }) => (
                                 isPlaylistTime ? (
