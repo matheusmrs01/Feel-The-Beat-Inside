@@ -11,3 +11,19 @@ export function returnToHome() {
         type: '@playlist/RETURN_TO_HOME',
     };
 }
+
+export function playTheMusic(songsPlaying, currentSongPlaying, indexCurrentSongPlaying, indexCurrentPlayList) {
+    return {
+        type: '@playlist/PLAY_THE_PLAYLIST',
+        songsPlaying: songsPlaying,
+        currentSongPlaying: currentSongPlaying,
+        indexCurrentSongPlaying: indexCurrentSongPlaying,
+        indexCurrentPlayList: indexCurrentPlayList,
+    };
+}
+
+export function stopTheMusic() {
+    return {
+        type: '@playlist/STOP_THE_MUSIC',
+    };
+}

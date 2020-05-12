@@ -3,6 +3,11 @@ import produce from 'immer';
 const INITIAL_STATE = {
     playlist: null,
     songlist: null,
+    songsPlaying: null,
+    currentSongPlaying: null,
+    indexCurrentSongPlaying: 0,
+    indexCurrentPlayList: 0,
+    isMusicPaused: false,
     isPlaylistTime: true,
 };
 
@@ -19,6 +24,28 @@ export default function playlist(state = INITIAL_STATE, action) {
                 draft.playlist = null;
                 draft.songlist = null;
                 draft.isPlaylistTime = true;
+                break;
+            }
+            case '@playlist/PLAY_THE_PLAYLIST': {
+                draft.songsPlaying = action.songsPlaying;
+                draft.currentSongPlaying = action.currentSongPlaying;
+                draft.indexCurrentSongPlaying = action.indexCurrentSongPlaying;
+                draft.indexCurrentPlayList = action.indexCurrentPlayList;
+                break;
+            }
+            case '@playlist/STOP_THE_MUSIC': {
+                draft.currentSongPlaying = null;
+                draft.indexCurrentSongPlaying = 0;
+                draft.indexCurrentPlayList = 0;
+                draft.songsPlaying = null;
+                break;
+            }
+            case '@playlist/PAUSE_MUSIC': {
+                draft.isMusicPaused = true;
+                break;
+            }
+            case '@playlist/PLAY_MUSIC': {
+                draft.isMusicPaused = true;
                 break;
             }
         }
