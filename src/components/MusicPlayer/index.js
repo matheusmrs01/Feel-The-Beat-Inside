@@ -49,6 +49,16 @@ const MusicPlayer = () => {
         return
     }
 
+    async function handlePreviousSong() {
+        if (songsPlaying.items[indexCurrentSongPlaying - 1]) {
+            dispatch(playNextSong(songsPlaying.items[indexCurrentSongPlaying - 1], indexCurrentSongPlaying - 1))
+            return
+        } else {
+            dispatch(playNextSong(songsPlaying.items[indexCurrentSongPlaying], indexCurrentSongPlaying))
+            return
+        }
+    }
+
     async function handleNextSogn() {
         if (songsPlaying.items[indexCurrentSongPlaying + 1]) {
             dispatch(playNextSong(songsPlaying.items[indexCurrentSongPlaying + 1], indexCurrentSongPlaying + 1))
@@ -100,7 +110,7 @@ const MusicPlayer = () => {
                             </ContainerDescription>
                         </ContainerTracksFullScreen>
                         <MusicPlayerContainer>
-                            <TouchableDefault onPress={() => { }}>
+                            <TouchableDefault onPress={handlePreviousSong}>
                                 <MaterialCommunityIcons name="skip-previous" size={80} color="#fff" />
                             </TouchableDefault>
 
