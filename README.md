@@ -10,7 +10,7 @@ yarn start
 ```
 Escaneie o QR Code utilizando o app do expo. Ou.
 
-Se você tiver um emulador no computador, basta rodar o seguinte comando:
+Se você tiver um emulador de android no computador, basta rodar o seguinte comando:
 ```bash
 yarn android
 ```
