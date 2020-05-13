@@ -20,3 +20,8 @@ Escaneie o QR Code utilizando o app do expo.
   - Botão para musica anterior
   - Botão de play e pause
   - Barra de progresso do tempo da musica
+  
+## Versão das tecnologias no projeto
+- react: ~16.9.0
+- react-native: 0.61
+- expo: ~37.0.3
