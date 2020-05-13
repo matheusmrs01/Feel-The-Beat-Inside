@@ -1,7 +1,7 @@
 # Feel The Beat Inside
-Feel The Beat Inside é um app construído utilizando React Native.
+Feel The Beat Inside é um app construído utilizando React Native com as ferramentas do Expo.
+
 Onde você faz o login utilizando sua conta do Spotify, e tem acesso as suas playlists.
-O projeto foi feito utilizando o expo.
 
 ## Servidor de desenvolvimento
 Primeiramente baixe o app do Expo da loja (Google Play). No caso do Iphone, é necessario ter um Mac.
