@@ -12,7 +12,7 @@ Escaneie o QR Code utilizando o app do expo. Ou.
 
 Se você tiver um emulador no computador, basta rodar o seguinte comando:
 ```bash
-expo start --android
+yarn android
 ```
 
 ## Funcionalidades
