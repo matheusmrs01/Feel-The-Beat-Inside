@@ -43,7 +43,7 @@ const MusicPlayer = () => {
     const currentSongPlaying = useSelector(state => state.playlist.currentSongPlaying)
     const indexCurrentSongPlaying = useSelector(state => state.playlist.indexCurrentSongPlaying)
     const songsPlaying = useSelector(state => state.playlist.songsPlaying)
-    const indexCurrentPlayList = useSelector(state => state.playlist.indexCurrentPlayList)
+    const indexCurrentPlayListPlaying = useSelector(state => state.playlist.indexCurrentPlayListPlaying)
     const isMusicPaused = useSelector(state => state.playlist.isMusicPaused)
 
     const userPLaylists = useSelector(state => state.playlist.playlists)
@@ -98,8 +98,8 @@ const MusicPlayer = () => {
             dispatch(playNextSong(songsPlaying.items[indexCurrentSongPlaying + 1], indexCurrentSongPlaying + 1))
             return
         } else {
-            let nextPlaylist = userPLaylists[indexCurrentPlayList + 1] ? userPLaylists[indexCurrentPlayList + 1] : userPLaylists[0]
-            let indexNextPlaylist = userPLaylists[indexCurrentPlayList + 1] ? indexCurrentPlayList + 1 : 0;
+            let nextPlaylist = userPLaylists[indexCurrentPlayListPlaying + 1] ? userPLaylists[indexCurrentPlayListPlaying + 1] : userPLaylists[0]
+            let indexNextPlaylist = userPLaylists[indexCurrentPlayListPlaying + 1] ? indexCurrentPlayListPlaying + 1 : 0;
             let response
             try {
                 response = await api.get(`${nextPlaylist.tracks.href.split('v1')[1]}`)
